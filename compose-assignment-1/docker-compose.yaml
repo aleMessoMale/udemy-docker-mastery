@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  drupal:
+    image: drupal:8.8.2 
+    ports:
+      - '8080:80'
+    environment:
+      DATABASE_TYPE: PostgreSQL
+      DATABASE_HOST: postgres-db
+      POSTGRES_DB: drupal
+      POSTGRES_USER: drupal-user
+      POSTGRES_PASSWORD: drupal-password
+    volumes:
+      # assign to a named volume (folder not specified in the volume creation and not possibile without a specific plugin)
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles
+      # assign to a specific folder
+      - ./volumes/drupal-themes:/var/www/html/themes
+      - drupal-sites:/var/www/html/sites
+  postgres-db:
+    image: postgres:12.1
+    environment:
+      POSTGRES_DB: drupal
+      POSTGRES_USER: drupal-user
+      POSTGRES_PASSWORD: drupal-password 
+volumes:
+  drupal-modules:
+  drupal-profiles:
+  drupal-sites:

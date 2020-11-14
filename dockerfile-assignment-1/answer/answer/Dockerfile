@@ -6,7 +6,7 @@ RUN apk add --update tini
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY package.json package.json
 
 RUN npm install && npm cache clean --force
 
